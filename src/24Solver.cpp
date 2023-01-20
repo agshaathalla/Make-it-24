@@ -87,7 +87,7 @@ float operasi(float a, char ops, float b){
 }
 
 void writeFile(vector <string> forPrint, string nama, int w, int x, int y, int z){
-    ofstream file("../test/"+ nama + ".txt");
+    ofstream file("./test/"+ nama + ".txt");
     file << "Daftar kartu : " << w << " " << x << " " << y << " " << z << endl;
     file << "____________________________" << endl;
     file << forPrint.size() << " Solution(s) found." << endl;
