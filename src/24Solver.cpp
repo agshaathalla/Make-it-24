@@ -52,7 +52,10 @@ void addArray(float k, float l, float m, float n){
     int i;
     bool found;
     found = false;
-    i = 1;
+    i = 0;
+    if (k==l && k==m && k==n){
+        found = false;
+    }
     while (i <= N && found == false){
         if (k == b[i] && l == c[i] && m == d[i] && n == e[i]){
             found = true;
@@ -99,7 +102,8 @@ void writeFile(vector <string> forPrint, string nama, int w, int x, int y, int z
     file.close();
 }
 
-void buatKombinasi(int w, int x, int y, int z){
+void buatKombinasi(float w, float x, float y, float z){
+
     addArray(w, x, y, z);
     addArray(w, x, z, y);
     addArray(w, y, x, z);
@@ -174,7 +178,7 @@ int main(){
 
     int count = 0;
     //kita mulai algoritmanya
-    for (size_t i=1;i<N;i++){
+    for (size_t i=1;i<=N;i++){
         for (int j=0; j<64;j++){
             //((b+c)+d)+e
             int uji1 = operasi(operasi(operasi(b[i], ops[j][0], c[i]), ops[j][1], d[i]), ops[j][2], e[i]);
