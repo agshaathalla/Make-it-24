@@ -9,7 +9,6 @@
 using namespace std;
 
 float b[25], c[25], d[25], e[25];
-int N = 0;
 vector <string> forPrint;
 string hasil;
 
@@ -48,7 +47,7 @@ int randomGenerator(){
     return random;
 }
 
-void addArray(float k, float l, float m, float n){
+void addArray(float k, float l, float m, float n, int &N){
     int i;
     bool found;
     found = false;
@@ -89,60 +88,47 @@ float operasi(float a, char ops, float b){
     return 0;
 }
 
-void writeFile(vector <string> forPrint, string nama, int w, int x, int y, int z){
+void writeFile(vector <string> forPrint, string nama, int w, int x, int y, int z, double waktu, int count){
     ofstream file("./test/"+ nama + ".txt");
     file << "Daftar kartu : " << w << " " << x << " " << y << " " << z << endl;
-    file << "____________________________" << endl;
-    file << forPrint.size() << " Solution(s) found." << endl;
-    file << "____________________________" << endl;
+    file << "________________________________" << endl;
+    file << count << " Solution(s) found." << endl;
+    file << "Time required: " << waktu << " seconds" << endl;
+    file << "________________________________" << endl;
     file << "Jawaban: " << endl;
-    for (int i = 0; i < forPrint.size(); i++){
-        file << forPrint[i] << endl;
+    if (count > 0){
+        for (int i = 0; i < forPrint.size(); i++){
+            file << forPrint[i] << endl;
+        }
     }
     file.close();
 }
 
-void buatKombinasi(float w, float x, float y, float z){
-
-    addArray(w, x, y, z);
-    addArray(w, x, z, y);
-    addArray(w, y, x, z);
-    addArray(w, y, z, x);
-    addArray(w, z, x, y);
-    addArray(w, z, y, x);
-    addArray(x, w, y, z);
-    addArray(x, w, z, y);
-    addArray(x, y, w, z);
-    addArray(x, y, z, w);
-    addArray(x, z, w, y);
-    addArray(x, z, y, w);
-    addArray(y, w, x, z);
-    addArray(y, w, z, x);
-    addArray(y, x, w, z);
-    addArray(y, x, z, w);
-    addArray(y, z, w, x);
-    addArray(y, z, x, w);
-    addArray(z, w, x, y);
-    addArray(z, w, y, x);
-    addArray(z, x, w, y);
-    addArray(z, x, y, w);
-    addArray(z, y, w, x);
-    addArray(z, y, x, w);
+void buatKombinasi(float w, float x, float y, float z, int &N){
+    float siapPermutasi[] = {w, x, y, z};
+    int ukuran = 4;
+    sort(siapPermutasi, siapPermutasi+ukuran);
+    do{
+        for(int i=0; i<ukuran; i+=4){
+            addArray(siapPermutasi[i], siapPermutasi[i+1], siapPermutasi[i+2], siapPermutasi[i+3], N);
+        }
+    } while(next_permutation(siapPermutasi, siapPermutasi+ukuran));
 }
 
 
-int main(){
+int menu(){
+    int N = 0;
     int pilihan;
-    splashScreen();
     cout <<"Anda dapat memasukkan 4 angka (2-10) dan huruf (A,J,K,Q) atau membuatnya secara random" << endl;
-    // cout <<"" << endl;
     cout <<"1. memasukkan angka/huruf" << endl;
     cout <<"2. membuat angka/huruf secara random" << endl;
     cout <<"___________________________________________" << endl;
     cout <<"Masukkan pilihan anda : ";
     cin >> pilihan;
     while (pilihan != 1 && pilihan != 2){
+        cout << "_______________________" << endl;
         cout << "Masukkan angka 1 atau 2" << endl;
+        cout <<"Masukkan pilihan anda : ";
         cin >> pilihan;
     }
     string a1, a2, a3, a4;
@@ -151,6 +137,8 @@ int main(){
         cout << "Masukkan 4 angka/huruf" << endl;
         cin >> a1 >> a2 >> a3 >> a4;
         while(tepat(a1) == false || tepat(a2) == false || tepat(a3) == false || tepat(a4) == false){
+            cout << "_______________________" << endl;
+            cout << "Masukan salah!" << endl;
             cout << "Masukkan 4 angka/huruf" << endl;
             cin >> a1 >> a2 >> a3 >> a4;
         }
@@ -167,45 +155,47 @@ int main(){
         y = rand() % 13 + 1;
         z = rand() % 13 + 1;
     }
-    cout << "anda memasukkan angka " << w << " " << x << " " << y << " " << z << endl;
+    cout << "anda memasukkan angka [" << w << " " << x << " " << y << " " << z << "]" << endl;
+    buatKombinasi(w,x,y,z,N);
 
-    buatKombinasi(w,x,y,z);
+    // cout << "N = " << N << endl;
+    // for(int k=1; k<=N; k++){
+    //     cout << b[k] << " " << c[k] << " " << d[k] << " " << e[k] << endl;
+    // }
 
     string ops[64] = {"+++", "++-", "++*", "++/", "+-+", "+--", "+-*", "+-/", "+*+", "+*-", "+**", "+*/", "+/+", "+/-", "+/*", "+//", "-++", "-+-", "-+*", "-+/", "--+", "---", "--*", "--/", "-*+", "-*-", "-**", "-*/", "-/+", "-/-", "-/*", "-//", "*++", "*+-", "*+*", "*+/", "*-+", "*--", "*-*", "*-/", "**+", "**-", "***", "**/", "*/+", "*/-", "*/*", "*//", "/++", "/+-", "/+*", "/+/", "/-+", "/--", "/-*", "/-/", "/*+", "/*-", "/**", "/*/", "//+", "//-", "//*", "///"};
-
     //pewaktu
     auto start = chrono::high_resolution_clock::now();
-
     int count = 0;
     //kita mulai algoritmanya
-    for (size_t i=1;i<=N;i++){
+    for (int i=1;i<=N;i++){
         for (int j=0; j<64;j++){
             //((b+c)+d)+e
-            int uji1 = operasi(operasi(operasi(b[i], ops[j][0], c[i]), ops[j][1], d[i]), ops[j][2], e[i]);
+            float uji1 = operasi(operasi(operasi(b[i], ops[j][0], c[i]), ops[j][1], d[i]), ops[j][2], e[i]);
             if(abs(uji1-24) == 0){
                 hasil = "((" + to_string(int(b[i])) + ops[j][0] + to_string(int(c[i])) + ")" + ops[j][1] + to_string(int(d[i])) + ")" + ops[j][2] + to_string(int(e[i])) + "";
                 forPrint.push_back(hasil);
                 count += 1;}
             // (b+(c+d))+e
-            int uji2 = operasi(operasi(b[i], ops[j][0], operasi(c[i], ops[j][1], d[i])), ops[j][2], e[i]);
+            float uji2 = operasi(operasi(b[i], ops[j][0], operasi(c[i], ops[j][1], d[i])), ops[j][2], e[i]);
             if(abs(uji2-24) == 0){
                 hasil = "(" + to_string(int(b[i])) + ops[j][0] + "(" + to_string(int(c[i])) + ops[j][1] + to_string(int(d[i])) + "))" + ops[j][2] + to_string(int(e[i])) + "";
                 forPrint.push_back(hasil);
                 count += 1;}
             // b+((c+d)+e)
-            int uji3 = operasi(b[i], ops[j][0], operasi(operasi(c[i], ops[j][1], d[i]), ops[j][2], e[i]));
+            float uji3 = operasi(b[i], ops[j][0], operasi(operasi(c[i], ops[j][1], d[i]), ops[j][2], e[i]));
             if(abs(uji3-24) == 0){
                 hasil =  to_string(int(b[i])) + ops[j][0] + "((" + to_string(int(c[i])) + ops[j][1] + to_string(int(d[i])) + ")" + ops[j][2] + to_string(int(e[i])) + ")";
                 forPrint.push_back(hasil);
                 count += 1;}
             // b+(c+(d+e))
-            int uji4 = operasi(b[i], ops[j][0], operasi(c[i], ops[j][1], operasi(d[i], ops[j][2], e[i])));
+            float uji4 = operasi(b[i], ops[j][0], operasi(c[i], ops[j][1], operasi(d[i], ops[j][2], e[i])));
             if(abs(uji4-24) == 0){
                 hasil =  to_string(int(b[i])) + ops[j][0] + "(" + to_string(int(c[i])) + ops[j][1] + "(" + to_string(int(d[i])) + ops[j][2] + to_string(int(e[i])) + "))";
                 forPrint.push_back(hasil);
                 count += 1;}
             // (b+c)+(d+e)
-            int uji5 = operasi(operasi(b[i], ops[j][0], c[i]), ops[j][1], operasi(d[i], ops[j][2], e[i]));
+            float uji5 = operasi(operasi(b[i], ops[j][0], c[i]), ops[j][1], operasi(d[i], ops[j][2], e[i]));
             if(abs(uji5-24) == 0){
                 hasil =  "(" + to_string(int(b[i])) + ops[j][0] + to_string(int(c[i])) + ")" + ops[j][1] + "(" + to_string(int(d[i])) + ops[j][2] + to_string(int(e[i])) + ")";
                 forPrint.push_back(hasil);
@@ -213,18 +203,23 @@ int main(){
             
         }
     }
-
     //print hasil
-    for (size_t i = 0; i < forPrint.size(); i++) {
-        cout << forPrint[i] << endl;
-    }
-    cout <<"___________________________________________" << endl;
+    cout << "___________________________________________" << endl;
+
     if (count == 0) {
         cout << "Tidak ada solusi" << endl;
     }
     else{
         cout << "Telah ditemukan " << count << " solusi" << endl;
+        cout << "___________________________________________" << endl;
+        cout << "Hasil pencarian: " << endl;
+        for (size_t i = 0; i < forPrint.size(); i++) {
+            cout << forPrint[i] << endl;
+        }
     }
+
+    cout <<"___________________________________________" << endl;
+
 
     //pewaktu
     auto end1 = chrono::high_resolution_clock::now();
@@ -242,7 +237,7 @@ int main(){
         cout << "Masukkan nama file: ";
         string namaFile;
         cin >> namaFile;
-        writeFile(forPrint, namaFile, w, x, y, z);
+        writeFile(forPrint, namaFile, w, x, y, z, time_taken, count);
         cout << "File berhasil disimpan" << endl;
         
     }
@@ -253,6 +248,27 @@ int main(){
     time_taken2 *= 1e-9;
     cout << "Waktu eksekusi program : " << time_taken2 << setprecision(9);
     cout << " detik" << endl;
-
-    cout << "Terima kasih telah menggunakan program ini" << endl;
+    return 0; 
 }
+
+int main(){
+    system("CLS");
+    char restart;
+    auto mulai = chrono::high_resolution_clock::now();
+    do{
+        forPrint.clear();
+        splashScreen();
+        menu();
+        cout << "Apakah anda ingin mencoba kembali? (y/n): ";
+        cin >> restart;
+        system("CLS");
+    } while(restart == 'y');
+    splashScreen();
+    auto selesai = chrono::high_resolution_clock::now();
+    double waktu = chrono::duration_cast<chrono::nanoseconds>(selesai - mulai).count();
+    waktu *= 1e-9;
+    cout << "Waktu program berjalan : " << waktu << setprecision(9);
+    cout << " detik" << endl;
+    cout << "Terima kasih telah menggunakan program ini" << endl;
+    cout << "__________________________________________" << endl;
+    }
