@@ -1,0 +1,6 @@
+Daftar kartu : 10 10 10 10
+________________________________
+0 Solution(s) found.
+Time required: 0.0013488 seconds
+________________________________
+Jawaban: 

@@ -1,0 +1,6 @@
+Daftar kartu : 13 3 8 8
+________________________________
+0 Solution(s) found.
+Time required: 0.0020764 seconds
+________________________________
+Jawaban: 
