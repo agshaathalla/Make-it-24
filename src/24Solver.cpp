@@ -107,12 +107,17 @@ void writeFile(vector <string> forPrint, string nama, int w, int x, int y, int z
 void buatKombinasi(float w, float x, float y, float z, int &N){
     float siapPermutasi[] = {w, x, y, z};
     int ukuran = 4;
-    sort(siapPermutasi, siapPermutasi+ukuran);
-    do{
-        for(int i=0; i<ukuran; i+=4){
-            addArray(siapPermutasi[i], siapPermutasi[i+1], siapPermutasi[i+2], siapPermutasi[i+3], N);
+    for (int i=0; i<ukuran; i++){
+        for (int j=0; j<ukuran; j++){
+            for (int k=0; k<ukuran; k++){
+                for (int l=0; l<ukuran; l++){
+                    if (i != j && i != k && i != l && j != k && j != l && k != l){
+                        addArray(siapPermutasi[i], siapPermutasi[j], siapPermutasi[k], siapPermutasi[l], N);
+                    }
+                }
+            }
         }
-    } while(next_permutation(siapPermutasi, siapPermutasi+ukuran));
+    }
 }
 
 
@@ -271,4 +276,6 @@ int main(){
     cout << " detik" << endl;
     cout << "Terima kasih telah menggunakan program ini" << endl;
     cout << "__________________________________________" << endl;
+    getchar();
+    return 0;
     }
