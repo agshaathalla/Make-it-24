@@ -11,7 +11,7 @@ Membuat program untuk menyelesaikan Permainan Kartu 24 dengan Algoritma Brute Fo
 * [Authors](#authors)
 
 ## General Information
-Program ini berfungsi untuk menyelesaikan permainan kartu 24.
+Program ini berfungsi untuk menyelesaikan permainan kartu 24. Permainan ini dapat diselesaikan dengan membuat suatu persamaan dengan operasi matematika sederhana (pertambahan, pengurangan, perkalian, dan pembagian) dan bantuan kurung untuk membentuk hasil 24. Permaianan ini dapat diselesaikan dengan algotirma brute force yang diimpementasikan dalam program ini dengan menggunakan bahasa C++.
 
 ## Requirement Program
 
