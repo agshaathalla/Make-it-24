@@ -1,0 +1,6 @@
+Daftar kartu : 11 11 13 5
+________________________________
+0 Solution(s) found.
+Time required: 0.001129 seconds
+________________________________
+Jawaban: 
