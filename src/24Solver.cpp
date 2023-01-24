@@ -5,7 +5,6 @@
 #include "splashScreeen.cpp"
 #include <vector>
 #include <bits/stdc++.h>
-#include <chrono>
 using namespace std;
 
 float b[25], c[25], d[25], e[25];
@@ -42,7 +41,6 @@ float ubah(string a){
 }
 
 int randomGenerator(){
-    // srand(time(0));
     float random = rand() % 13 + 1;
     return random;
 }
@@ -60,7 +58,7 @@ void addArray(float k, float l, float m, float n, int &N){
             found = true;
         }
         else{
-            i++;
+            i += 1;
         }
     }
     if (found == false){
@@ -121,7 +119,7 @@ void buatKombinasi(float w, float x, float y, float z, int &N){
 }
 
 
-int menu(){
+void menu(){
     int N = 0;
     int pilihan;
     cout <<"Anda dapat memasukkan 4 angka (2-10) dan huruf (A,J,K,Q) atau membuatnya secara random" << endl;
@@ -163,10 +161,6 @@ int menu(){
     cout << "anda memasukkan angka [" << w << " " << x << " " << y << " " << z << "]" << endl;
     buatKombinasi(w,x,y,z,N);
 
-    // cout << "N = " << N << endl;
-    // for(int k=1; k<=N; k++){
-    //     cout << b[k] << " " << c[k] << " " << d[k] << " " << e[k] << endl;
-    // }
 
     string ops[64] = {"+++", "++-", "++*", "++/", "+-+", "+--", "+-*", "+-/", "+*+", "+*-", "+**", "+*/", "+/+", "+/-", "+/*", "+//", "-++", "-+-", "-+*", "-+/", "--+", "---", "--*", "--/", "-*+", "-*-", "-**", "-*/", "-/+", "-/-", "-/*", "-//", "*++", "*+-", "*+*", "*+/", "*-+", "*--", "*-*", "*-/", "**+", "**-", "***", "**/", "*/+", "*/-", "*/*", "*//", "/++", "/+-", "/+*", "/+/", "/-+", "/--", "/-*", "/-/", "/*+", "/*-", "/**", "/*/", "//+", "//-", "//*", "///"};
     //pewaktu
@@ -243,7 +237,7 @@ int menu(){
         string namaFile;
         cin >> namaFile;
         writeFile(forPrint, namaFile, w, x, y, z, time_taken, count);
-        cout << "File berhasil disimpan" << endl;
+        cout << "File " << namaFile << ".txt berhasil disimpan!" << endl;
         
     }
 
@@ -253,7 +247,6 @@ int menu(){
     time_taken2 *= 1e-9;
     cout << "Waktu eksekusi program : " << time_taken2 << setprecision(9);
     cout << " detik" << endl;
-    return 0; 
 }
 
 int main(){
